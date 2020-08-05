@@ -128,6 +128,19 @@ const actions = {
       url: `/mall/property/${id}`,
       method: 'get',
     })
+  },
+  attachValueForProperty({commit}, {id,data}) {
+    return request({
+      url: `/mall/property/${id}/value`,
+      method: 'put',
+      data: data
+    })
+  },
+  deletePropertyValue({commit}, id) {
+    return request({
+      url: `/mall/property_value/${id}`,
+      method: 'delete',
+    })
   }
 }
 const mutations = {
