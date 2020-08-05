@@ -193,9 +193,13 @@ export default {
           })
           .then(() => {
             this.loading = false
+          }).catch(() => {
+            this.loading = false
           })
       } else {
         this.$store.dispatch('createProduct', this.formModel).then(() => {
+          this.loading = false
+        }).catch(() => {
           this.loading = false
         })
       }

@@ -88,6 +88,7 @@ const actions = {
       return resp
     })
   },
+
   updateProduct({ commit }, { id, data }) {
     return updateProduct(id, data).then((resp) => {
       return resp
@@ -106,6 +107,14 @@ const actions = {
   updateProductCategory({ commit }, { id, data }) {
     return updateProductCategory(id, data).then((resp) => {
       return resp
+    })
+  },
+
+  createProduct({ commit }, data) {
+    return request({
+      url: '/mall/item',
+      method: 'post',
+      data: data
     })
   },
   fetchProperty({commit}, query) {
