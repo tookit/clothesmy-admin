@@ -19,6 +19,7 @@
                 label="Name"
                 name="name"
                 placeholder="Name"
+                @change="handleNameChange"
               />
             </v-col>
             <v-col :cols="6">
@@ -46,7 +47,6 @@
               <v-switch
                 v-model="formModel.is_active"
                 label="Active"
-                outlined
                 placeholder="Active"
               />
             </v-col>
@@ -107,8 +107,10 @@ import { mapGetters } from 'vuex'
 import { findAllParent } from '@/utils'
 import VCascader from '@/components/cascader/'
 import Media from '@/components/media/Index'
+import SlugifyMixin from '@/mixins/Slugify'
 export default {
   name: 'FromProductCategory',
+  mixins: [SlugifyMixin],
   components: { VCascader, Media },
   props: {
     item: Object
@@ -125,7 +127,7 @@ export default {
         reference_url: null,
         featured_img: null,
         is_active: false,
-        parent_id: null,
+        parent_id: this.$route.query.parent_id,
         categories: []
       }
     }
@@ -190,11 +192,18 @@ export default {
           })
           .then(() => {
             this.loading = false
+          }).catch(()=> {
+            this.loading = false
           })
       } else {
         this.$store
           .dispatch('createProductCategory', this.formModel)
-          .then(() => {
+          .then(({data}) => {
+            this.loading = false
+            this.$router.push({
+              path: `/mall/category/item/${data.id}`
+            })
+          }).catch(() => {
             this.loading = false
           })
       }
@@ -202,6 +211,9 @@ export default {
     handleCategoryChange(val) {
       const categories = val.filter((item) => item !== 0)
       this.formModel.parent_id = categories.pop()
+    },
+    handleNameChange(val){
+      this.formModel.slug = this.slugify(val)
     },
     handleViewItem() {
       if (this.item) {
