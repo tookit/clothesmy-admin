@@ -166,7 +166,7 @@ export default {
           tags: data.tags.map((item) => item.name),
           categories:
             data.categories.length > 0
-              ? data.categories.map((item) => item.category_id)
+              ? data.categories.map((item) => item.id)
               : []
         }
       } else {

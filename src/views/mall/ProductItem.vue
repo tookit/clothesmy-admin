@@ -80,7 +80,7 @@ export default {
       return `${process.env.VUE_APP_BASE_API_HOST}/api/mall/item/${this.id}/image`
     },
     directory() {
-      return `fiber/${this.id}`
+      return `clothes/${this.id}`
     }
   },
   watch: {
