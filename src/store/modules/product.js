@@ -15,6 +15,7 @@ import request from '@/utils/request'
 const state = {
   categories: [],
   //props
+  properties: [],
   units: [
     {
       text: 'Set',
@@ -39,6 +40,9 @@ const state = {
 const getters = {
   getProductCategories: (state) => {
     return state.categories
+  },
+  getProperties: (state) => {
+    return state.properties
   },
   getPropUnits: (state) => {
     return state.units
@@ -117,44 +121,61 @@ const actions = {
       data: data
     })
   },
-  fetchProperty({commit}, query) {
+  fetchProperty({ commit }, query) {
     return request({
       url: '/mall/property',
       method: 'get',
       params: query
+    }).then((resp) => {
+      if (query && query.pageSize == -1) {
+        commit('SET_PRODUCT_PROPERTIES', resp.data)
+      }
+      return resp
     })
   },
 
-  fetchValueById({commit}, id) {
+  fetchValueById({ commit }, id) {
     return request({
       url: `/mall/property/${id}/value`,
-      method: 'get',
+      method: 'get'
+    }).then((resp) => {
+      console.log(resp)
     })
   },
 
-  getPropertyById({commit}, id) {
+  getPropertyById({ commit }, id) {
     return request({
       url: `/mall/property/${id}`,
-      method: 'get',
+      method: 'get'
     })
   },
-  attachValueForProperty({commit}, {id,data}) {
+  attachValueForProperty({ commit }, { id, data }) {
     return request({
       url: `/mall/property/${id}/value`,
       method: 'put',
       data: data
     })
   },
-  deletePropertyValue({commit}, id) {
+  attachPropsForProduct({ commit }, { id, data }) {
+    return request({
+      url: `/mall/item/${id}/property`,
+      method: 'post',
+      data: data
+    })
+  },
+  deletePropertyValue({ commit }, id) {
     return request({
       url: `/mall/property_value/${id}`,
-      method: 'delete',
+      method: 'delete'
     })
   }
 }
 const mutations = {
   SET_PRODUCT_CATEGORY(state, { data }) {
     state.categories = data
+  },
+  SET_PRODUCT_PROPERTIES(state, data) {
+    state.properties = data
   }
 }
 

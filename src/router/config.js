@@ -119,7 +119,7 @@ export const protectedRoute = [
             props: true,
             component: () => import('@/views/mall/ProductItem.vue'),
             meta: {
-              title: 'Edit Prouduct',
+              title: 'Edit Product',
               hiddenInMenu: true,
               icon: 'mdi-view'
             }
@@ -187,7 +187,7 @@ export const protectedRoute = [
               hiddenInMenu: true,
               icon: 'mdi-view'
             }
-          },
+          }
         ]
       },
       {

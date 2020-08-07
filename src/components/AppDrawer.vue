@@ -1,9 +1,9 @@
 <template>
-  <v-navigation-drawer app class="app--drawer" :width="drawerWidth" dark>
-    <v-toolbar flat>
+  <v-navigation-drawer app class="app-drawer" :width="drawerWidth" dark>
+    <v-toolbar flat class="app-drawer__toolbar">
       <img
         :src="computeLogo"
-        :width="drawerWidth === 64 ? 36 : 220"
+        :width="drawerWidth === 64 ? 64 : 256"
         :height="64"
         alt="Kame"
       />
@@ -120,9 +120,7 @@ export default {
       return true
     },
     computeLogo() {
-      return this.drawerWidth === 256
-        ? 'http://www.theopticalfiber.com/images/logo/logo.png'
-        : '/http://www.theopticalfiber.com/images/logo/logo.png'
+      return this.drawerWidth === 256 ? '/logo/logo_text.png' : '/logo/logo.png'
     }
   },
   created() {},
@@ -140,7 +138,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.app--drawer
+.app-drawer
   overflow: hidden !important
 
   .drawer-menu--scroll

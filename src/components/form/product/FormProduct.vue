@@ -4,16 +4,17 @@
       <v-form>
         <v-container fluid>
           <v-row>
-            <v-col :cols="6">
+            <v-col :cols="12">
               <v-text-field
                 v-model="formModel.name"
                 outlined
                 label="Name"
                 name="Name"
                 placeholder="name"
+                @input="handleNameChange"
               />
             </v-col>
-            <v-col :cols="6">
+            <v-col :cols="12">
               <v-text-field
                 v-model="formModel.slug"
                 readonly
@@ -46,7 +47,17 @@
                 label="Reference"
                 append-icon="mdi-eye"
                 placeholder="Reference"
-                @click:append="handleViewReference"
+                @click:append="handleViewReference(formModel.reference_url)"
+              />
+            </v-col>
+            <v-col :cols="12">
+              <v-text-field
+                v-model="formModel.ali_url"
+                outlined
+                label="Ali Express"
+                append-icon="mdi-eye"
+                placeholder="Ali Express"
+                @click:append="handleViewReference(formModel.ali_url)"
               />
             </v-col>
             <v-col :cols="12">
@@ -109,8 +120,10 @@ import { mapGetters } from 'vuex'
 import VJodit from '@/components/jodit'
 import VCascader from '@/components/cascader/'
 import { fetchTags } from '@/api/service'
+import SlugifyMixin from '@/mixins/Slugify'
 export default {
   name: 'FormProduct',
+  mixins: [SlugifyMixin],
   components: {
     VJodit,
     VCascader
@@ -131,6 +144,7 @@ export default {
         description: null,
         slug: null,
         reference_url: null,
+        ali_url: null,
         specs: '',
         categories: [],
         tags: []
@@ -162,6 +176,7 @@ export default {
           is_active: data.is_active,
           is_home: data.is_home,
           reference_url: data.reference_url,
+          ali_url: data.ali_url,
           specs: data.specs,
           tags: data.tags.map((item) => item.name),
           categories:
@@ -177,6 +192,7 @@ export default {
           is_active: null,
           is_home: null,
           reference_url: null,
+          ali_url: null,
           specs: '',
           categories: []
         }
@@ -193,15 +209,19 @@ export default {
           })
           .then(() => {
             this.loading = false
-          }).catch(() => {
+          })
+          .catch(() => {
             this.loading = false
           })
       } else {
-        this.$store.dispatch('createProduct', this.formModel).then(() => {
-          this.loading = false
-        }).catch(() => {
-          this.loading = false
-        })
+        this.$store
+          .dispatch('createProduct', this.formModel)
+          .then(() => {
+            this.loading = false
+          })
+          .catch(() => {
+            this.loading = false
+          })
       }
     },
     handleCategoriesChange(categories) {
@@ -215,9 +235,9 @@ export default {
         window.open(this.item.href, '_blank')
       }
     },
-    handleViewReference() {
-      if (this.item) {
-        window.open(this.item.reference_url, '_blank')
+    handleViewReference(url) {
+      if (url) {
+        window.open(url, '_blank')
       }
     },
     handleAddTag(e) {
@@ -236,6 +256,9 @@ export default {
           return item
         })
       })
+    },
+    handleNameChange(val) {
+      this.formModel.slug = this.slugify(val.toLowerCases())
     }
   },
   created() {

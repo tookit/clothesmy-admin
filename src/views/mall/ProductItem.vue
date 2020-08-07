@@ -18,6 +18,7 @@
               <form-product :item="item" :loading="loading" />
             </v-tab-item>
             <v-tab-item key="media" value="media">
+              <v-subheader v-if="item">{{ item.name }}</v-subheader>
               <media
                 @selected="handleSelectMedia"
                 :directory="directory"
@@ -25,11 +26,16 @@
               />
             </v-tab-item>
             <v-tab-item key="seo" value="seo">
+              <v-subheader v-if="item">{{ item.name }}</v-subheader>
               <seo-form
                 :item="item"
                 :loading="loading"
                 :action="updateProduct"
               />
+            </v-tab-item>
+            <v-tab-item key="prop" value="prop">
+              <v-subheader v-if="item">{{ item.name }}</v-subheader>
+              <form-product-property :item="item" />
             </v-tab-item>
           </v-tabs-items>
         </v-col>
@@ -41,6 +47,7 @@
 <script>
 import FormProduct from '@/components/form/product/FormProduct'
 import SeoForm from '@/components/form/SeoForm'
+import FormProductProperty from '@/components/form/product/FormProductProperty'
 import Media from '@/components/media/Index'
 import { attachMediaForProduct } from '@/api/service'
 import { mapActions } from 'vuex'
@@ -51,7 +58,8 @@ export default {
   components: {
     SeoForm,
     Media,
-    FormProduct
+    FormProduct,
+    FormProductProperty
   },
   data() {
     return {
@@ -68,6 +76,10 @@ export default {
         {
           text: 'SEO',
           value: 'seo'
+        },
+        {
+          text: 'Properties',
+          value: 'prop'
         }
       ],
       loading: false,
