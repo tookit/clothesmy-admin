@@ -138,8 +138,6 @@ const actions = {
     return request({
       url: `/mall/property/${id}/value`,
       method: 'get'
-    }).then((resp) => {
-      console.log(resp)
     })
   },
 

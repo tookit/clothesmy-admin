@@ -1,3 +1,4 @@
+import request from '@/utils/request'
 const state = {
   availableTranslations: [
     { text: 'English', value: 'en', code: ['en-us', 'en'] },
@@ -13,14 +14,30 @@ const state = {
     { text: '简体中文', value: 'zh', code: ['zh', 'zh-cn'] }
   ],
   sizes: [],
-  pageSize: 15
+  pageSize: 15,
+  settings: null
 }
 const getters = {
   getAvailableTranslations: (state) => state.availableTranslations,
   getSizes: (state) => state.sizes,
-  getPageSize: (state) => state.pageSize
+  getPageSize: (state) => state.pageSize,
+  getSiteSetting: (state) => state.settings
 }
-const actions = {}
+const actions = {
+  fetchSetting({ commit }) {
+    return request({
+      url: `/cms/setting/`,
+      method: 'get'
+    })
+  },
+  updateSetting({ commit }, data) {
+    return request({
+      url: `/cms/setting/`,
+      method: 'post',
+      data: data
+    })
+  }
+}
 const mutations = {}
 
 export default {

@@ -45,9 +45,7 @@
                 v-model="formModel.type"
               />
             </v-col>
-
           </v-row>
-
         </v-container>
       </v-form>
     </v-card-text>
@@ -66,8 +64,7 @@ import SlugifyMixin from '@/mixins/Slugify'
 export default {
   name: 'FormProperty',
   mixins: [SlugifyMixin],
-  components: {
-  },
+  components: {},
   props: {
     item: Object
   },
@@ -81,12 +78,12 @@ export default {
         name: null,
         type: null,
         unit: null,
-        slug: null,
+        slug: null
       }
     }
   },
   computed: {
-    ...mapGetters(['getProductCategories','getPropUnits','getPropTypes']),
+    ...mapGetters(['getProductCategories', 'getPropUnits', 'getPropTypes']),
     formTitle() {
       return this.item ? 'Edit Product' : 'Create Product'
     }
@@ -114,7 +111,7 @@ export default {
         name: null,
         type: null,
         unit: null,
-        slug: null,
+        slug: null
       }
     },
     handleSubmit() {
@@ -150,7 +147,7 @@ export default {
       this.formModel.slug = this.slugify(val.toLowerCase())
     }
   },
-  created() { }
+  created() {}
 }
 </script>
 

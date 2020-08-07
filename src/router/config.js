@@ -347,6 +347,17 @@ export const protectedRoute = [
         component: () => import('@/views/Media.vue')
       },
       {
+        path: '/setting',
+        name: 'setting.index',
+        meta: {
+          group: 'setting',
+          title: 'Setting',
+          hiddenInMenu: false,
+          icon: 'mdi-cogs'
+        },
+        component: () => import('@/views/Setting.vue')
+      },
+      {
         path: '/acl',
         name: 'acl.index',
         meta: {

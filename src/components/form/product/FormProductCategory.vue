@@ -192,18 +192,20 @@ export default {
           })
           .then(() => {
             this.loading = false
-          }).catch(()=> {
+          })
+          .catch(() => {
             this.loading = false
           })
       } else {
         this.$store
           .dispatch('createProductCategory', this.formModel)
-          .then(({data}) => {
+          .then(({ data }) => {
             this.loading = false
             this.$router.push({
               path: `/mall/category/item/${data.id}`
             })
-          }).catch(() => {
+          })
+          .catch(() => {
             this.loading = false
           })
       }
@@ -212,8 +214,8 @@ export default {
       const categories = val.filter((item) => item !== 0)
       this.formModel.parent_id = categories.pop()
     },
-    handleNameChange(val){
-      this.formModel.slug = this.slugify(val)
+    handleNameChange(val) {
+      this.formModel.slug = this.slugify(val.toLowerCase())
     },
     handleViewItem() {
       if (this.item) {
