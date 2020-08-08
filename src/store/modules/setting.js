@@ -15,13 +15,44 @@ const state = {
   ],
   sizes: [],
   pageSize: 15,
-  settings: null
+  settings: null,
+  colors: [
+    'red',
+    'black',
+    'white',
+    'purple',
+    'blue',
+    'green',
+    'grey',
+    'pink',
+    'yellow'
+  ],
+  flags: [
+    {
+      text: 'Default',
+      value: 0
+    },
+    {
+      text: 'New',
+      value: 1
+    },
+    {
+      text: 'Hot',
+      value: 2
+    },
+    {
+      text: 'Featured',
+      value: 2
+    }
+  ]
 }
 const getters = {
   getAvailableTranslations: (state) => state.availableTranslations,
   getSizes: (state) => state.sizes,
   getPageSize: (state) => state.pageSize,
-  getSiteSetting: (state) => state.settings
+  getSiteSetting: (state) => state.settings,
+  getColors: (state) => state.colors,
+  getFlags: (state) => state.flags
 }
 const actions = {
   fetchSetting({ commit }) {

@@ -2,7 +2,7 @@
   <div>
     <template v-if="item">
       <v-card>
-        <v-img class="grey lighten-3" height="450px" :src="item.url" />
+        <v-img class="grey lighten-3" height="400px" :src="item.cloud_url" />
         <v-divider></v-divider>
         <v-card-text class="pa-3">
           <v-form>
@@ -10,6 +10,7 @@
               name="name"
               v-model="formModel.filename"
               outlined
+              dense
               label="Filename"
               placeholder="Filename"
             />
@@ -17,8 +18,18 @@
               name="title"
               v-model="formModel.custom_properties.title"
               outlined
+              dense
               label="Title"
               placeholder="Title"
+            />
+            <v-autocomplete
+              name="color"
+              v-model="formModel.color"
+              :items="getColors"
+              outlined
+              dense
+              label="Color"
+              placeholder="color"
             />
             <v-switch
               v-model="formModel.custom_properties.featured"
@@ -79,6 +90,7 @@ export default {
       loading: false,
       formModel: {
         filename: '',
+        color: null,
         custom_properties: {
           title: '',
           featured: false
@@ -90,7 +102,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getAccessToken']),
+    ...mapGetters(['getAccessToken', 'getColors']),
     option() {
       return {
         url: this.action,
@@ -105,7 +117,7 @@ export default {
     item: {
       handler(item) {
         if (item) {
-          this.formModel.filename = item.name
+          this.formModel.filename = item.filename
           if (item.custom_properties !== null) {
             this.formModel.custom_properties = item.custom_properties
           }

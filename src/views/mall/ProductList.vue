@@ -58,7 +58,7 @@
                 v-if="item.media.length > 0"
                 @click.stop="showLightbox = true"
                 class="ma-3"
-                :src="resize(item.media[0].url, 50, 50)"
+                :src="resize(item.media[0].cloud_url, 50, 50)"
                 width="50"
                 height="50"
               />
@@ -197,7 +197,7 @@ export default {
       let temp = []
       this.items.forEach((item) => {
         item.media.forEach((m) => {
-          temp.push(m.url)
+          temp.push(m.cloud_url)
         })
       })
       return temp

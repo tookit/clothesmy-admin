@@ -134,6 +134,21 @@ const actions = {
     })
   },
 
+  createProperty({ commit }, data) {
+    return request({
+      url: '/mall/property',
+      method: 'post',
+      data: data
+    })
+  },
+  updateProperty({ commit }, { id, data }) {
+    return request({
+      url: `/mall/property/${id}`,
+      method: 'put',
+      data: data
+    })
+  },
+
   fetchValueById({ commit }, id) {
     return request({
       url: `/mall/property/${id}/value`,

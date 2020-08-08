@@ -22,7 +22,6 @@
                 outlined
                 placeholder="slug"
                 append-icon="mdi-eye"
-                @click:append="handleViewItem"
               />
             </v-col>
             <v-col :cols="6">
@@ -37,7 +36,7 @@
             </v-col>
             <v-col :cols="6">
               <v-select
-                :items="getPropTypes"
+                :items="['sku', 'spu']"
                 outlined
                 name="type"
                 placeholder="Type"
@@ -117,32 +116,30 @@ export default {
     handleSubmit() {
       this.loading = true
 
-      if (this.formModel.id) {
+      if (this.item) {
         this.$store
-          .dispatch('updateProduct', {
-            id: this.formModel.id,
+          .dispatch('updateProperty', {
+            id: this.item.id,
             data: this.formModel
           })
           .then(() => {
             this.loading = false
           })
+          .catch(() => {
+            this.loading = false
+          })
       } else {
-        this.$store.dispatch('createProduct', this.formModel).then(() => {
-          this.loading = false
-        })
+        this.$store
+          .dispatch('createProperty', this.formModel)
+          .then(() => {
+            this.loading = false
+          })
+          .catch(() => {
+            this.loading = false
+          })
       }
     },
-    handleCategoriesChange(categories) {
-      this.formModel.categories = categories
-      this.formModel.category_ids = categories.map((item) => {
-        return item.id
-      })
-    },
-    handleViewItem() {
-      if (this.item) {
-        window.open(this.item.href, '_blank')
-      }
-    },
+
     handleNameChange(val) {
       this.formModel.slug = this.slugify(val.toLowerCase())
     }

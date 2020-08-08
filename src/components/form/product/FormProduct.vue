@@ -25,14 +25,23 @@
                 @click:append="handleViewItem"
               />
             </v-col>
-            <v-col :cols="6">
+            <v-col :cols="4">
+              <v-select
+                v-model="formModel.flag"
+                :items="getFlags"
+                outlined
+                label="Flag"
+                placeholder="Flag"
+              />
+            </v-col>
+            <v-col :cols="4">
               <v-switch
                 v-model="formModel.is_active"
                 label="Active"
                 placeholder="Active"
               />
             </v-col>
-            <v-col :cols="6">
+            <v-col :cols="4">
               <v-switch
                 v-model="formModel.is_home"
                 label="Home"
@@ -95,8 +104,12 @@
               />
             </v-col>
             <v-col :cols="12">
-              <label for="">Description</label>
-              <v-jodit v-model="formModel.description" />
+              <v-textarea
+                v-model="formModel.description"
+                outlined
+                label="Description"
+                placeholder="Description"
+              />
             </v-col>
             <v-col :cols="12">
               <label for="">Specs</label>
@@ -121,6 +134,7 @@ import VJodit from '@/components/jodit'
 import VCascader from '@/components/cascader/'
 import { fetchTags } from '@/api/service'
 import SlugifyMixin from '@/mixins/Slugify'
+import sanitizeHtml from 'sanitize-html'
 export default {
   name: 'FormProduct',
   mixins: [SlugifyMixin],
@@ -141,8 +155,9 @@ export default {
         name: null,
         is_active: null,
         is_home: null,
-        description: null,
+        description: '',
         slug: null,
+        flag: 0,
         reference_url: null,
         ali_url: null,
         specs: '',
@@ -152,7 +167,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getProductCategories']),
+    ...mapGetters(['getProductCategories', 'getFlags']),
     formTitle() {
       return this.item ? 'Edit Product' : 'Create Product'
     }
@@ -161,6 +176,53 @@ export default {
     item: {
       handler(item) {
         this.assignModel(item)
+      },
+      immediate: true
+    },
+    'formModel.specs': {
+      handler(item) {
+        this.formModel.specs = sanitizeHtml(item, {
+          allowedTags: [
+            'h3',
+            'h4',
+            'h5',
+            'h6',
+            'blockquote',
+            'p',
+            'a',
+            'ul',
+            'ol',
+            'nl',
+            'li',
+            'b',
+            'i',
+            'strong',
+            'em',
+            'strike',
+            'abbr',
+            'code',
+            'hr',
+            'br',
+            'div',
+            'table',
+            'thead',
+            'caption',
+            'tbody',
+            'tr',
+            'th',
+            'td',
+            'pre',
+            'iframe',
+            'img'
+          ],
+          allowedAttributes: {
+            a: ['href'],
+            td: ['rowspan'],
+            th: ['rowspan'],
+            table: ['class']
+          },
+          allowedIframeHostnames: ['www.youtube.com']
+        })
       },
       immediate: true
     }
@@ -173,11 +235,13 @@ export default {
           name: data.name,
           description: data.description,
           slug: data.slug,
+          flag: data.flag,
           is_active: data.is_active,
           is_home: data.is_home,
-          reference_url: data.reference_url,
+          reference_url:
+            data.reference_url || this.computeAliUrl(data.custom_id),
           ali_url: data.ali_url,
-          specs: data.specs,
+          specs: data.specs || '',
           tags: data.tags.map((item) => item.name),
           categories:
             data.categories.length > 0
@@ -187,9 +251,10 @@ export default {
       } else {
         this.formModel = {
           name: null,
-          description: null,
+          description: '',
           slug: null,
-          is_active: null,
+          is_active: false,
+          flag: 0,
           is_home: null,
           reference_url: null,
           ali_url: null,
@@ -197,6 +262,9 @@ export default {
           categories: []
         }
       }
+    },
+    computeAliUrl(id) {
+      return `https://www.aliexpress.com/item/${id}.html`
     },
     handleSubmit() {
       this.loading = true

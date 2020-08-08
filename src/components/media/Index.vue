@@ -34,18 +34,22 @@
       <v-btn slot="toolbar" icon @click="handleCreate">
         <v-icon>mdi-plus</v-icon>
       </v-btn>
-      <template v-slot:item.url="{ item }">
-        <a :href="item.url" class="glightbox" target="blank">
-          <img
-            class="ma-2"
-            :src="resize(item.url, 50, 50)"
-            height="50"
-            width="50"
-          />
-        </a>
+      <template v-slot:item.cloud_url="{ item }">
+        <v-img
+          @click.stop="showLightbox = true"
+          class="ma-3"
+          :src="resize(item.cloud_url, 50, 50)"
+          width="50"
+          height="50"
+        />
       </template>
       <template v-slot:item.size="{ item }">
         <span>{{ item.size | bytes }}</span>
+      </template>
+      <template v-slot:item.color="{ item }">
+        <v-chip small pill label :color="item.color" dark>
+          {{ item.color }}
+        </v-chip>
       </template>
       <template v-slot:item.action="{ item }">
         <v-menu>
@@ -82,6 +86,12 @@
         :item="selectedItem"
       />
     </v-dialog>
+    <vue-easy-lightbox
+      :visible="showLightbox"
+      :imgs="imgs"
+      :index="index"
+      @hide="showLightbox = false"
+    />
   </div>
 </template>
 
@@ -105,8 +115,8 @@ export default {
   },
   data() {
     return {
-      index: null,
-      showImageDialog: false,
+      showLightbox: false,
+      index: 0,
       showDialog: false,
       selectedItem: null,
       loading: false,
@@ -122,19 +132,19 @@ export default {
         },
         {
           text: 'Image',
-          value: 'url'
+          value: 'cloud_url'
         },
         {
           text: 'Name',
           value: 'filename'
         },
         {
-          text: 'Size',
-          value: 'size'
+          text: 'Color',
+          value: 'color'
         },
         {
-          text: 'Attached',
-          value: 'attached'
+          text: 'Size',
+          value: 'size'
         },
         {
           text: 'Directory',
@@ -187,6 +197,11 @@ export default {
   computed: {
     uploadAction() {
       return `${process.env.VUE_APP_BASE_API_HOST}/api/media?dir=${this.directory}`
+    },
+    imgs() {
+      return this.items.map((item) => {
+        return item.cloud_url
+      })
     }
   },
 
@@ -235,7 +250,8 @@ export default {
     },
     handleUploadSuccess() {
       // attach entity
-      this.attachAction.call(this)
+      this.fetchMedia()
+      // this.attachAction.call(this)
     },
     handleRowClick(e) {
       this.$emit('selected', e)

@@ -44,10 +44,26 @@
               />
             </v-col>
             <v-col :cols="6">
+              <v-select
+                v-model="formModel.flag"
+                label="Flag"
+                outlined
+                :items="flags"
+                placeholder="Flag"
+              />
+            </v-col>
+            <v-col :cols="6">
               <v-switch
                 v-model="formModel.is_active"
                 label="Active"
                 placeholder="Active"
+              />
+            </v-col>
+            <v-col :cols="6">
+              <v-switch
+                v-model="formModel.is_home"
+                label="Home Page"
+                placeholder="Home Page"
               />
             </v-col>
             <v-col :cols="12">
@@ -120,13 +136,16 @@ export default {
       showDialog: false,
       loading: false,
       parent_id: this.$route.query.parent_id,
+      flags: ['hot', 'promote', 'default', 'new'],
       formModel: {
         name: null,
         description: null,
         slug: null,
+        flag: 'default',
         reference_url: null,
         featured_img: null,
         is_active: false,
+        is_home: false,
         parent_id: this.$route.query.parent_id,
         categories: []
       }
@@ -169,6 +188,8 @@ export default {
           reference_url: null,
           featured_img: null,
           is_active: false,
+          is_home: false,
+          flag: 'default',
           parent_id: null
         }
         if (this.parent_id) {

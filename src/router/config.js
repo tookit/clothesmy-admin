@@ -86,7 +86,7 @@ export const protectedRoute = [
             name: 'mall.product',
             component: () => import('@/views/mall/ProductList.vue'),
             meta: {
-              title: 'Product List',
+              title: 'Product',
               hiddenInMenu: false,
               icon: 'mdi-view'
             }
@@ -96,7 +96,7 @@ export const protectedRoute = [
             name: 'mall.quote',
             component: () => import('@/views/mall/QuoteList.vue'),
             meta: {
-              title: 'Quote List',
+              title: 'Quote',
               hiddenInMenu: false,
               icon: 'mdi-view'
             }
@@ -128,7 +128,7 @@ export const protectedRoute = [
             path: '/mall/category',
             name: 'mall.category',
             meta: {
-              title: 'Proudct Category',
+              title: 'Category',
               hiddenInMenu: false,
               icon: 'mdi-view'
             },
@@ -160,7 +160,7 @@ export const protectedRoute = [
             path: '/mall/property',
             name: 'mall.property',
             meta: {
-              title: 'Proudct Propterty',
+              title: 'Propterty',
               hiddenInMenu: false,
               icon: 'mdi-view'
             },
