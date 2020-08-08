@@ -59,6 +59,7 @@ export default {
   },
   created() {
     // fetch common data
+    console.log(this.$route)
     this.$store.dispatch('fetchProductCategoryTree')
     this.$store.dispatch('fetchNewsCategory')
   }

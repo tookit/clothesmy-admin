@@ -50,6 +50,9 @@
                 </v-card-actions>
               </v-card>
             </div>
+            <v-btn slot="toolbar" icon @click="handleRefreshItem">
+              <v-icon>mdi-refresh</v-icon>
+            </v-btn>
             <v-btn slot="toolbar" icon @click="handleCreateItem">
               <v-icon>mdi-plus</v-icon>
             </v-btn>
@@ -213,6 +216,9 @@ export default {
           this.items = this.items.filter((item) => item.id !== id)
         })
       }
+    },
+    handleRefreshItem() {
+      this.fetchRecord()
     },
     handlePageChanged(page) {
       this.fetchRecord({
