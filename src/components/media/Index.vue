@@ -31,6 +31,9 @@
           </v-card-actions>
         </v-card>
       </div>
+      <v-btn slot="toolbar" icon @click="handleRefreshItem">
+        <v-icon>mdi-refresh</v-icon>
+      </v-btn>
       <v-btn slot="toolbar" icon @click="handleCreate">
         <v-icon>mdi-plus</v-icon>
       </v-btn>
@@ -42,6 +45,9 @@
           width="50"
           height="50"
         />
+      </template>
+      <template v-slot:item.products="{ item }">
+        <span>{{ item.products[0].name }}</span>
       </template>
       <template v-slot:item.size="{ item }">
         <span>{{ item.size | bytes }}</span>
@@ -137,6 +143,10 @@ export default {
         {
           text: 'Name',
           value: 'filename'
+        },
+        {
+          text: 'Product',
+          value: 'products'
         },
         {
           text: 'Color',
@@ -243,6 +253,10 @@ export default {
           this.fetchMedia()
         })
       }
+    },
+
+    handleRefreshItem() {
+      this.fetchMedia()
     },
     handleFormCancel() {
       this.showDialog = false
