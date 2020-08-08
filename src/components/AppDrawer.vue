@@ -1,5 +1,11 @@
 <template>
-  <v-navigation-drawer app class="app-drawer" :width="drawerWidth" dark>
+  <v-navigation-drawer
+    app
+    class="app-drawer"
+    :width="drawerWidth"
+    dark
+    v-model="showDrawer"
+  >
     <v-toolbar flat class="app-drawer__toolbar">
       <img
         :src="computeLogo"
@@ -59,18 +65,18 @@
             width="64"
             icon
             tile
-            @click="handleDrawerToggle"
+            @click="handleExpandDrawer"
             class="mx-auto"
           >
-            <v-icon>mdi-menu</v-icon>
+            <v-icon>mdi-arrow-collapse-right</v-icon>
           </v-btn>
         </div>
       </template>
       <template v-else>
         <div class="d-flex">
           <v-spacer></v-spacer>
-          <v-btn icon tile @click="handleDrawerToggle" class="mr-2">
-            <v-icon>mdi-menu</v-icon>
+          <v-btn icon tile @click="handleExpandDrawer" class="mr-2">
+            <v-icon>mdi-arrow-collapse-left</v-icon>
           </v-btn>
         </div>
       </template>
@@ -91,6 +97,7 @@ export default {
   data() {
     return {
       mini: false,
+      showDrawer: true,
       drawerWidth: 256,
       items: [
         {
@@ -126,7 +133,10 @@ export default {
   created() {},
 
   methods: {
-    handleDrawerToggle() {
+    toggleDrawer() {
+      this.showDrawer = !this.showDrawer
+    },
+    handleExpandDrawer() {
       if (this.drawerWidth === 64) {
         this.drawerWidth = 256
       } else {
