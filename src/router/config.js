@@ -162,7 +162,7 @@ export const protectedRoute = [
             meta: {
               title: 'Propterty',
               hiddenInMenu: false,
-              icon: 'mdi-view'
+              icon: 'mdi-filter-variant'
             },
             component: () => import('@/views/mall/PropertyList.vue')
           },
@@ -364,7 +364,7 @@ export const protectedRoute = [
           group: 'acl',
           title: 'ACL',
           hiddenInMenu: false,
-          icon: 'mdi-account'
+          icon: 'mdi-shield-account'
         },
         component: RouterWrapper,
         redirect: {
@@ -378,7 +378,7 @@ export const protectedRoute = [
             meta: {
               title: 'Users',
               hiddenInMenu: false,
-              icon: 'mdi-view'
+              icon: 'mdi-account'
             }
           },
           {
@@ -409,7 +409,7 @@ export const protectedRoute = [
             meta: {
               title: 'Roles',
               hiddenInMenu: false,
-              icon: 'mdi-view'
+              icon: 'mdi-account-group'
             }
           },
           {
