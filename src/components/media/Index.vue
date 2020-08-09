@@ -47,7 +47,7 @@
         />
       </template>
       <template v-slot:item.products="{ item }">
-        <span>{{ item.products[0].name }}</span>
+        <span>{{ item.products.length > 0 ? item.products[0].name : '' }}</span>
       </template>
       <template v-slot:item.size="{ item }">
         <span>{{ item.size | bytes }}</span>

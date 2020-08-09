@@ -88,7 +88,7 @@ export const protectedRoute = [
             meta: {
               title: 'Product',
               hiddenInMenu: false,
-              icon: 'mdi-view'
+              icon: 'mdi-database'
             }
           },
           {
@@ -98,7 +98,7 @@ export const protectedRoute = [
             meta: {
               title: 'Quote',
               hiddenInMenu: false,
-              icon: 'mdi-view'
+              icon: 'mdi-basket'
             }
           },
 
@@ -130,7 +130,7 @@ export const protectedRoute = [
             meta: {
               title: 'Category',
               hiddenInMenu: false,
-              icon: 'mdi-view'
+              icon: 'mdi-buffer'
             },
             component: () => import('@/views/mall/CategoryList.vue')
           },
@@ -211,7 +211,7 @@ export const protectedRoute = [
             meta: {
               title: 'News',
               hiddenInMenu: false,
-              icon: 'mdi-view'
+              icon: 'mdi-post'
             }
           },
 
@@ -244,7 +244,7 @@ export const protectedRoute = [
             meta: {
               title: 'Tags',
               hiddenInMenu: false,
-              icon: 'mdi-view'
+              icon: 'mdi-tag'
             }
           },
           {
@@ -276,7 +276,7 @@ export const protectedRoute = [
             meta: {
               title: 'Category',
               hiddenInMenu: false,
-              icon: 'mdi-view'
+              icon: 'mdi-buffer'
             }
           },
           {
@@ -308,7 +308,7 @@ export const protectedRoute = [
             meta: {
               title: 'Slider',
               hiddenInMenu: false,
-              icon: 'mdi-view'
+              icon: 'mdi-folder-image'
             }
           },
           {

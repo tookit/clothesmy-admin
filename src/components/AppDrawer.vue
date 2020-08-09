@@ -22,6 +22,7 @@
             :prepend-icon="item.meta.icon"
             no-action
             :to="item.path"
+            class="dark"
           >
             <template v-slot:activator>
               <v-list-item-content>
@@ -29,16 +30,24 @@
               </v-list-item-content>
             </template>
             <v-list-item
+              :class="drawerWidth === 64 ? 'pl-4' : ''"
               v-for="subItem in item.children"
               :key="subItem.name"
               :to="subItem.path"
               v-show="!subItem.meta.hiddenInMenu"
             >
-              <v-list-item-content>
-                <v-list-item-title
-                  v-text="subItem.meta.title"
-                ></v-list-item-title>
-              </v-list-item-content>
+              <template v-if="drawerWidth === 64">
+                <v-list-item-icon>
+                  <v-icon v-text="subItem.meta.icon"></v-icon>
+                </v-list-item-icon>
+              </template>
+              <template v-else>
+                <v-list-item-content>
+                  <v-list-item-title
+                    v-text="subItem.meta.title"
+                  ></v-list-item-title>
+                </v-list-item-content>
+              </template>
             </v-list-item>
           </v-list-group>
         </template>
