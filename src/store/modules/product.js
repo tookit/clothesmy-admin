@@ -44,6 +44,12 @@ const getters = {
   getProperties: (state) => {
     return state.properties
   },
+  getSkuProperties: (state) => {
+    return state.properties.filter((item) => item.type === 'sku')
+  },
+  getSpuProperties: (state) => {
+    return state.properties.filter((item) => item.type === 'spu')
+  },
   getPropUnits: (state) => {
     return state.units
   },
@@ -162,6 +168,13 @@ const actions = {
       method: 'get'
     })
   },
+
+  fetchSpecByProductId({ commit }, id) {
+    return request({
+      url: `/mall/item/${id}/sku`,
+      method: 'get'
+    })
+  },
   attachValueForProperty({ commit }, { id, data }) {
     return request({
       url: `/mall/property/${id}/value`,
@@ -172,6 +185,13 @@ const actions = {
   attachPropsForProduct({ commit }, { id, data }) {
     return request({
       url: `/mall/item/${id}/property`,
+      method: 'post',
+      data: data
+    })
+  },
+  attachSkuForProduct({ commit }, { id, data }) {
+    return request({
+      url: `/mall/item/${id}/sku`,
       method: 'post',
       data: data
     })

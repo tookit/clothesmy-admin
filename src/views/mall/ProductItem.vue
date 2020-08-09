@@ -3,6 +3,7 @@
     <v-container fluid>
       <v-row>
         <v-col>
+          <v-subheader v-if="item">{{ item.name }}</v-subheader>
           <v-tabs class="route-tab" v-model="defaultTab">
             <v-tab
               v-for="(item, key) in tabs"
@@ -18,7 +19,6 @@
               <form-product :item="item" :loading="loading" />
             </v-tab-item>
             <v-tab-item key="media" value="media">
-              <v-subheader v-if="item">{{ item.name }}</v-subheader>
               <media
                 @selected="handleSelectMedia"
                 :directory="directory"
@@ -26,7 +26,6 @@
               />
             </v-tab-item>
             <v-tab-item key="seo" value="seo">
-              <v-subheader v-if="item">{{ item.name }}</v-subheader>
               <seo-form
                 :item="item"
                 :loading="loading"
@@ -34,8 +33,10 @@
               />
             </v-tab-item>
             <v-tab-item key="prop" value="prop">
-              <v-subheader v-if="item">{{ item.name }}</v-subheader>
               <form-product-property :item="item" />
+            </v-tab-item>
+            <v-tab-item key="stock-and-price" value="stock-and-price">
+              <sku-table :specs="['Color', 'Size']" :product-id="id" />
             </v-tab-item>
           </v-tabs-items>
         </v-col>
@@ -48,6 +49,7 @@
 import FormProduct from '@/components/form/product/FormProduct'
 import SeoForm from '@/components/form/SeoForm'
 import FormProductProperty from '@/components/form/product/FormProductProperty'
+import SkuTable from '@/components/table/SkuTable'
 import Media from '@/components/media/Index'
 import { attachMediaForProduct } from '@/api/service'
 import { mapActions } from 'vuex'
@@ -59,7 +61,8 @@ export default {
     SeoForm,
     Media,
     FormProduct,
-    FormProductProperty
+    FormProductProperty,
+    SkuTable
   },
   data() {
     return {
@@ -80,6 +83,10 @@ export default {
         {
           text: 'Properties',
           value: 'prop'
+        },
+        {
+          text: 'Stock & Price',
+          value: 'stock-and-price'
         }
       ],
       loading: false,

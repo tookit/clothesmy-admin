@@ -4,7 +4,7 @@
       <v-form>
         <v-container fluid>
           <v-row>
-            <template v-for="item in getProperties">
+            <template v-for="item in getSpuProperties">
               <v-col :cols="12" :key="item.id">
                 <v-autocomplete
                   :items="item.values"
@@ -53,10 +53,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getProperties', 'getPropUnits', 'getPropTypes']),
-    formTitle() {
-      return this.item ? 'Edit Product' : 'Create Product'
-    }
+    ...mapGetters(['getSpuProperties', 'getPropUnits', 'getPropTypes'])
   },
   watch: {
     item: {

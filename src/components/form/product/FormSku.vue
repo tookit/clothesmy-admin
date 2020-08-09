@@ -4,13 +4,36 @@
       <v-form>
         <v-container fluid>
           <v-row>
-            <v-col :cols="12">
+            <template v-for="item in getSkuProperties">
+              <v-col :cols="6" :key="item.id">
+                <v-autocomplete
+                  v-model="formModel.specs[item.name]"
+                  outlined
+                  :items="item.values"
+                  :label="item.name"
+                  :name="item.name"
+                  :placeholder="item.name"
+                  item-text="value"
+                  item-value="value"
+                />
+              </v-col>
+            </template>
+            <v-col :cols="6">
               <v-text-field
-                v-model="formModel.value"
+                v-model="formModel.stock"
                 outlined
-                label="Value"
-                name="value"
-                placeholder="property value"
+                label="Stock"
+                name="Stock"
+                placeholder="Stock"
+              />
+            </v-col>
+            <v-col :cols="6">
+              <v-text-field
+                v-model="formModel.price"
+                outlined
+                label="Price"
+                name="Price"
+                placeholder="Price"
               />
             </v-col>
           </v-row>
@@ -29,11 +52,11 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
-  name: 'FormPropertyValue',
+  name: 'FormSku',
   components: {},
   props: {
     item: Object,
-    propertyId: [Number, String]
+    productId: [Number, String]
   },
   data() {
     return {
@@ -42,14 +65,14 @@ export default {
       search: null,
       tags: [],
       formModel: {
-        value: null
+        specs: {},
+        stock: 0,
+        price: 0
       }
     }
   },
   computed: {
-    formTitle() {
-      return 'Property Value'
-    }
+    ...mapGetters(['getSkuProperties'])
   },
   watch: {
     item: {
@@ -71,21 +94,23 @@ export default {
     },
     initModel() {
       this.formModel = {
-        value: null
+        specs: {},
+        stock: 0,
+        price: 0
       }
     },
     handleSubmit() {
       this.loading = true
-      const data = { id: this.propertyId, data: this.formModel }
       this.$store
-        .dispatch('attachValueForProperty', data)
+        .dispatch('attachSkuForProduct', {
+          id: this.productId,
+          data: this.formModel
+        })
         .then(() => {
           this.loading = false
-          this.$emit('form:success')
         })
         .catch(() => {
           this.loading = false
-          this.$emit('form:error')
         })
     }
   },

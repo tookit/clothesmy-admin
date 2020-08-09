@@ -61,6 +61,7 @@ export default {
     // fetch common data
     this.$store.dispatch('fetchProductCategoryTree')
     this.$store.dispatch('fetchNewsCategory')
+    this.$store.dispatch('fetchProperty', { pageSize: -1 })
   }
 }
 </script>

@@ -112,8 +112,8 @@
               />
             </v-col>
             <v-col :cols="12">
-              <label for="">Specs</label>
-              <v-jodit v-model="formModel.specs" />
+              <label for="">Content</label>
+              <v-jodit v-model="formModel.body" />
             </v-col>
           </v-row>
         </v-container>
@@ -160,7 +160,7 @@ export default {
         flag: 0,
         reference_url: null,
         ali_url: null,
-        specs: '',
+        body: '',
         categories: [],
         tags: []
       }
@@ -179,9 +179,9 @@ export default {
       },
       immediate: true
     },
-    'formModel.specs': {
+    'formModel.body': {
       handler(item) {
-        this.formModel.specs = sanitizeHtml(item, {
+        this.formModel.body = sanitizeHtml(item, {
           allowedTags: [
             'h3',
             'h4',
@@ -241,7 +241,7 @@ export default {
           reference_url:
             data.reference_url || this.computeAliUrl(data.custom_id),
           ali_url: data.ali_url,
-          specs: data.specs || '',
+          body: data.body || '',
           tags: data.tags.map((item) => item.name),
           categories:
             data.categories.length > 0
@@ -258,7 +258,7 @@ export default {
           is_home: null,
           reference_url: null,
           ali_url: null,
-          specs: '',
+          body: '',
           categories: []
         }
       }
