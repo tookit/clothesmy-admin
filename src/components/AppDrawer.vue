@@ -3,15 +3,14 @@
     app
     class="app-drawer"
     :width="drawerWidth"
-    dark
     v-model="showDrawer"
   >
     <v-toolbar flat class="app-drawer__toolbar">
       <img
         :src="computeLogo"
-        :width="drawerWidth === 64 ? 64 : 256"
-        :height="64"
-        alt="Kame"
+        :width="drawerWidth === 64 ? 64 : 234"
+        :height="50"
+        alt="Clothesmy"
       />
     </v-toolbar>
     <v-list class="pa-0">
