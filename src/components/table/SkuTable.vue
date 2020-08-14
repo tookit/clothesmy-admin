@@ -1,6 +1,9 @@
 <template>
   <div>
     <advance-table :items="items" :headers="computeHeaders" :loading="loading">
+      <v-btn slot="toolbar" icon @click="handleRefreshItem">
+        <v-icon>mdi-refresh</v-icon>
+      </v-btn>
       <v-btn slot="toolbar" icon @click="handleCreateItem">
         <v-icon>mdi-plus</v-icon>
       </v-btn>
@@ -152,6 +155,9 @@ export default {
     handleDeleteItem(item) {
       // if (window.confirm('Are you sure to delete this?')) {
       // }
+    },
+    handleRefreshItem() {
+      this.fetchRecord(this.productId)
     },
     handleCreateItem() {
       this.selectedItem = null

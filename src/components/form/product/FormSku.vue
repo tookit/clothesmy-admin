@@ -108,6 +108,7 @@ export default {
         })
         .then(() => {
           this.loading = false
+          this.$emit('form:success')
         })
         .catch(() => {
           this.loading = false
