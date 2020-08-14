@@ -18,25 +18,11 @@
               <v-card flat class="grey lighten-4">
                 <v-card-text>
                   <v-row>
-                    <v-col cols="12">
-                      <v-cascader
-                        name="categories"
-                        placeholder="Category"
-                        :items="getProductCategories"
-                        v-model="categories"
-                        @change="handleCategoryChange"
-                      />
-                    </v-col>
                     <v-col cols="6">
-                      <v-switch
-                        label="Active"
-                        v-model="filter['filter[is_active]']"
-                      />
-                    </v-col>
-                    <v-col cols="6">
-                      <v-switch
-                        label="Has Image"
-                        v-model="filter['filter[imaged]']"
+                      <v-select
+                        label="Type"
+                        :items="['sku','spu']"
+                        v-model="filter['filter[type]']"
                       />
                     </v-col>
                   </v-row>
@@ -101,14 +87,12 @@
 
 <script>
 import AdvanceTable from '@/components/table/AdvanceTable'
-import VCascader from '@/components/cascader/'
 import { mapActions, mapGetters } from 'vuex'
 import ResizeMixin from '@/mixins/Resize'
 export default {
   name: 'PageProduct',
   components: {
     AdvanceTable,
-    VCascader
   },
   mixins: [ResizeMixin],
   data() {
@@ -120,9 +104,7 @@ export default {
       items: [],
       filter: {
         'filter[name]': null,
-        'filter[is_active]': null,
-        'filter[imaged]': true,
-        'filter[categories.id]': []
+        'filter[type]': 'sku',
       },
       categories: [],
       headers: [
@@ -240,7 +222,11 @@ export default {
       })
     },
 
-    handleResetFilter() {},
+    handleResetFilter() {
+      this.$router.replace({
+        path: this.$route.path,
+      })
+    },
     handleInputChange(val) {
       this.filter['filter[name]'] = val
     }
