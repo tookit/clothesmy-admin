@@ -8,11 +8,14 @@
             :headers="headers"
             :loading="loading"
             :server-items-length="serverItemsLength"
-            :items-per-page="itemsPerPage"
+            :items-per-page="filter['pageSize']"
+            :page.sync="filter['page']"
             @update:page="handlePageChanged"
             :searchValue="filter['filter[name]']"
             @input:change="handleInputChange"
+            @update:items-per-page="handlePageSizeChanged"
             @search="handleApplyFilter"
+            :footer-props="footerProps"
           >
             <div slot="filter">
               <v-card flat class="grey lighten-4">
@@ -141,6 +144,8 @@ export default {
       loading: false,
       items: [],
       filter: {
+        page:1,
+        pageSize:15,
         'filter[name]': null,
         'filter[is_active]': null,
         'filter[imaged]': true,
@@ -191,7 +196,10 @@ export default {
           icon: 'mdi-close',
           click: this.handleDeleteItem
         }
-      ]
+      ],
+      footerProps: {
+      itemsPerPageOptions: [15,25,50, 100]
+      }
     }
   },
   computed: {
@@ -264,8 +272,19 @@ export default {
         .then(() => {})
     },
     handlePageChanged(page) {
-      this.fetchRecord({
-        page: page
+      this.filter.page = page
+      this.filter.t = Date.now()
+      this.$router.replace({
+        path: this.$route.path,
+        query: this.filter
+      })
+    },
+    handlePageSizeChanged(size) {
+      this.filter.pageSize =  size
+      this.filter.t = Date.now()
+      this.$router.replace({
+        path: this.$route.path,
+        query: this.filter
       })
     },
     handleCategoryChange(val) {
